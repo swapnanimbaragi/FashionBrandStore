@@ -50,7 +50,9 @@ if(cartItems.length > 0){
     cartItems.forEach(function(item, index){
 
         let priceNumber = Number(item.price.replace("₹","").replace(",",""));
-        total = total + priceNumber;
+        let quantity = item.qty || 1;
+
+        total = total + (priceNumber * quantity);
 
         cartContainer.innerHTML += `
             <div class="product-card">
@@ -59,6 +61,12 @@ if(cartItems.length > 0){
                 <h3>${item.name}</h3>
 
                 <p class="price">${item.price}</p>
+
+                <div class="quantity-box">
+                    <button onclick="decreaseQty(${index})">-</button>
+                    <span>${quantity}</span>
+                    <button onclick="increaseQty(${index})">+</button>
+                </div>
 
                 <p>⭐ 4.8</p>
 
@@ -85,6 +93,21 @@ else{
     `;
 
     totalPriceElement.innerText = "₹0";
+}
+
+function increaseQty(index){
+    cartItems[index].qty = (cartItems[index].qty || 1) + 1;
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    location.reload();
+}
+
+function decreaseQty(index){
+    if((cartItems[index].qty || 1) > 1){
+        cartItems[index].qty = (cartItems[index].qty || 1) - 1;
+    }
+
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    location.reload();
 }
 
 function removeCartItem(index){
