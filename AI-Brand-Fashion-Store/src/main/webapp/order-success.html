@@ -17,25 +17,23 @@
             <h1>🎉 Order Placed Successfully</h1>
 
             <p>
-
                 Thank you for shopping with Fashion-BrandStore.
-
             </p>
 
             <p>
-
                 Your order will be delivered soon.
-
             </p>
+
+            <!-- ORDERED PRODUCT -->
+
+            <p id="orderedProduct"></p>
 
             <br>
 
             <a href="homepage.html">
 
                 <button>
-
                     Continue Shopping
-
                 </button>
 
             </a>
@@ -43,6 +41,20 @@
         </div>
 
     </div>
+
+
+
+    <!-- SCRIPT -->
+
+    <script>
+
+    document.getElementById("orderedProduct").innerText =
+
+    "Ordered Product: " +
+
+    localStorage.getItem("cartName");
+
+    </script>
 
 </body>
 </html>

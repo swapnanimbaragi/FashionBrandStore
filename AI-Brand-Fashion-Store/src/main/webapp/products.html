@@ -240,9 +240,19 @@ function openProduct(name, image, price){
 }
 
 function addToCart(name, image, price){
-    localStorage.setItem("cartName", name);
-    localStorage.setItem("cartImage", image);
-    localStorage.setItem("cartPrice", price);
+
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    let product = {
+        name: name,
+        image: image,
+        price: price
+    };
+
+    cartItems.push(product);
+
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
     showCartToast("🛒 Product added to cart");
 }
 
