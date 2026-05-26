@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wishlist</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="home-page">
+
+<nav class="navbar">
+    <h1>Fashion-BrandStore</h1>
+
+    <ul>
+        <li><a href="homepage.html">Home</a></li>
+        <li><a href="homepage.html">Brands</a></li>
+        <li><a href="wishlist.html">Wishlist</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="login.html">Logout</a></li>
+    </ul>
+</nav>
+
+<section class="search-section">
+    <h2>My Wishlist</h2>
+    <p>Your favorite products appear here.</p>
+</section>
+
+<section class="categories" id="wishlistContainer"></section>
+
+<script>
+let wishName = localStorage.getItem("wishName");
+let wishImage = localStorage.getItem("wishImage");
+let wishPrice = localStorage.getItem("wishPrice");
+
+let wishlistContainer = document.getElementById("wishlistContainer");
+
+if(wishName){
+    wishlistContainer.innerHTML = `
+        <div class="product-card">
+            <img src="${wishImage}">
+
+            <h3>${wishName}</h3>
+
+            <p class="price">${wishPrice}</p>
+
+            <p>⭐ 4.8</p>
+
+            <p class="offer">Special Offer Available</p>
+
+            <div class="product-buttons">
+                <button onclick="moveToCart()">Add to Cart</button>
+                <button class="wishlist-btn" onclick="clearWishlist()">Remove</button>
+            </div>
+        </div>
+    `;
+}
+else{
+    wishlistContainer.innerHTML = `
+        <h2 style="color:white; width:100%; text-align:center;">
+            Wishlist is Empty
+        </h2>
+    `;
+}
+
+function moveToCart(){
+    localStorage.setItem("cartName", wishName);
+    localStorage.setItem("cartImage", wishImage);
+    localStorage.setItem("cartPrice", wishPrice);
+
+    showToast("💖 Product moved to cart");
+
+    setTimeout(function(){
+        window.location.href = "cart.html";
+    }, 1500);
+}
+
+function clearWishlist(){
+    localStorage.removeItem("wishName");
+    localStorage.removeItem("wishImage");
+    localStorage.removeItem("wishPrice");
+    location.reload();
+}
+
+function showToast(message){
+    let toast = document.createElement("div");
+    toast.className = "wishlist-toast";
+    toast.innerText = message;
+    document.body.appendChild(toast);
+
+    setTimeout(function(){
+        toast.remove();
+    }, 2500);
+}
+</script>
+
+</body>
+</html>

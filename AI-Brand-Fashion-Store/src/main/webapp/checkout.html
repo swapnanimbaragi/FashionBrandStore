@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="home-page">
+
+<nav class="navbar">
+    <h1>Fashion-BrandStore</h1>
+    <ul>
+        <li><a href="homepage.html">Home</a></li>
+        <li><a href="homepage.html">Brands</a></li>
+        <li><a href="wishlist.html">Wishlist</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="login.html">Logout</a></li>
+    </ul>
+</nav>
+
+<section class="checkout-section">
+
+    <div class="checkout-left">
+        <h1>Secure Checkout</h1>
+        <p>Complete your order with delivery and payment details.</p>
+
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <p>Rolex Luxury Watch</p>
+            <p>Nike Sneakers</p>
+            <p>Lakme Lipstick</p>
+            <h3>Total: ₹1,30,798</h3>
+        </div>
+    </div>
+
+    <div class="checkout-right">
+
+        <h2>Delivery Details</h2>
+
+        <form action="order-success.html">
+
+            <div class="form-row">
+                <input type="text" placeholder="Full Name" required>
+                <input type="text" placeholder="Mobile Number" required>
+            </div>
+
+            <input type="text" placeholder="Delivery Address" required>
+
+            <div class="form-row">
+                <input type="text" placeholder="City" required>
+                <input type="text" placeholder="Pincode" required>
+            </div>
+
+            <h2>Payment Method</h2>
+
+            <div class="payment-options">
+
+                <div class="payment-card" onclick="window.open('https://www.phonepe.com/','_blank')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/PhonePe_Logo.svg">
+                    <span>PhonePe</span>
+                </div>
+
+                <div class="payment-card" onclick="window.open('https://pay.google.com/','_blank')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/6124/6124998.png">
+                    <span>Google Pay</span>
+                </div>
+
+                <div class="payment-card" onclick="window.open('https://www.visa.co.in/','_blank')">
+                    <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png">
+                    <span>Visa</span>
+                </div>
+
+                <div class="payment-card" onclick="window.open('https://www.rupay.co.in/','_blank')">
+                    <img src="https://cdn.iconscout.com/icon/free/png-256/free-rupay-3-69845.png">
+                    <span>RuPay</span>
+                </div>
+
+                <div class="payment-card" onclick="window.open('https://paytm.com/','_blank')">
+                    <img src="https://cdn.iconscout.com/icon/free/png-256/free-paytm-226448.png">
+                    <span>Paytm</span>
+                </div>
+
+            </div>
+
+            <button type="submit" class="checkout-btn">Pay Now</button>
+
+        </form>
+    </div>
+
+</section>
+
+</body>
+</html>

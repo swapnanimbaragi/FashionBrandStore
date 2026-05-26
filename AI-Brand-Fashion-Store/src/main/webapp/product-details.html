@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Details</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="home-page">
+
+<nav class="navbar">
+    <h1>Fashion-BrandStore</h1>
+
+    <ul>
+        <li><a href="homepage.html">Home</a></li>
+        <li><a href="wishlist.html">Wishlist</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="profile.html">Profile</a></li>
+    </ul>
+</nav>
+
+<section class="details-section">
+
+    <div class="details-image">
+        <img id="detailImage">
+    </div>
+
+    <div class="details-info">
+        <h1 id="detailName"></h1>
+
+        <p class="price" id="detailPrice"></p>
+
+        <p id="detailRating">⭐ 4.8</p>
+
+        <p class="offer">Special Offer Available</p>
+
+        <p class="description">
+            This is a premium branded product with high quality design,
+            stylish appearance, durable material and modern fashion look.
+        </p>
+
+        <div class="product-buttons">
+            <button>Add to Cart</button>
+            <button class="wishlist-btn">Wishlist</button>
+        </div>
+    </div>
+
+</section>
+
+<script>
+document.getElementById("detailName").innerText =
+localStorage.getItem("detailName");
+
+document.getElementById("detailImage").src =
+localStorage.getItem("detailImage");
+
+document.getElementById("detailPrice").innerText =
+localStorage.getItem("detailPrice");
+</script>
+
+</body>
+</html>
