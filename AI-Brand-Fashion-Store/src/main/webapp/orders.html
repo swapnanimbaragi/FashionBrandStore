@@ -28,7 +28,7 @@
 
 <section class="orders-section">
 
-    <div class="order-card">
+    <div class="order-card" onclick="showTracking('Rolex Luxury Watch','Delivered')">
         <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49">
 
         <div>
@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <div class="order-card">
+    <div class="order-card" onclick="showTracking('Nike Sneakers','Shipped')">
         <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff">
 
         <div>
@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    <div class="order-card">
+    <div class="order-card" onclick="showTracking('Lakme Lipstick','Processing')">
         <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348">
 
         <div>
@@ -86,6 +86,31 @@
     </div>
 
 </section>
+<div id="trackingBox" class="tracking-box">
+    <h2 id="trackProduct"></h2>
+    <p id="trackStatus"></p>
 
+    <div class="tracking">
+        <div class="track active">Order Placed</div>
+        <div class="track active">Packed</div>
+        <div class="track active">Shipped</div>
+        <div class="track">Out for Delivery</div>
+        <div class="track">Delivered</div>
+    </div>
+
+    <button onclick="closeTracking()">Close</button>
+</div>
+
+<script>
+function showTracking(product, status){
+    document.getElementById("trackingBox").style.display = "block";
+    document.getElementById("trackProduct").innerText = product;
+    document.getElementById("trackStatus").innerText = "Current Status: " + status;
+}
+
+function closeTracking(){
+    document.getElementById("trackingBox").style.display = "none";
+}
+</script>
 </body>
 </html>
