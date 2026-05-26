@@ -1038,3 +1038,53 @@ button:hover{
     box-shadow:0 8px 25px rgba(0,0,0,0.35);
     z-index:9999;
 }
+
+/* ORDERS PAGE */
+
+.orders-section{
+    padding:30px 80px 80px;
+}
+
+.order-card{
+    display:flex;
+    gap:30px;
+    align-items:center;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(15px);
+    border-radius:25px;
+    padding:25px;
+    margin-bottom:25px;
+    color:white;
+    box-shadow:0 8px 25px rgba(0,0,0,0.25);
+}
+
+.order-card img{
+    width:180px;
+    height:160px;
+    object-fit:cover;
+    border-radius:20px;
+}
+
+.order-card h2{
+    margin-bottom:10px;
+}
+
+.order-card p{
+    color:#ddd6fe;
+    margin-bottom:8px;
+}
+
+.delivered{
+    color:#86efac !important;
+    font-weight:bold;
+}
+
+.shipped{
+    color:#93c5fd !important;
+    font-weight:bold;
+}
+
+.processing{
+    color:#facc15 !important;
+    font-weight:bold;
+}
