@@ -65,6 +65,9 @@
     <a href="checkout.html">
         <button>Proceed To Checkout</button>
     </a>
+    <button onclick="clearCart()" class="wishlist-btn">
+        Clear Cart
+    </button>
 </section>
 
 <script>
@@ -198,6 +201,11 @@ function applyCoupon(){
     else{
         showCartToast("❌ Invalid Coupon");
     }
+}
+
+function clearCart(){
+    localStorage.removeItem("cartItems");
+    location.reload();
 }
 </script>
 
