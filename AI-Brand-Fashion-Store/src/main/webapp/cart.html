@@ -29,17 +29,32 @@
 
 <section class="categories" id="cartContainer"></section>
 
-<div class="coupon-box">
+<div class="coupon-panel">
 
-    <input type="text"
-    id="couponInput"
-    placeholder="Enter Coupon Code">
+    <h2>Available Coupons</h2>
 
-    <button onclick="applyCoupon()">
+    <div class="coupon-card">
+        <div>
+            <h3>FASHION10</h3>
+            <p>Get 10% off on your cart</p>
+        </div>
 
-        Apply Coupon
+        <button onclick="useCoupon('FASHION10')">Use</button>
+    </div>
 
-    </button>
+    <div class="coupon-card">
+        <div>
+            <h3>WELCOME20</h3>
+            <p>Get ₹200 off above ₹2000</p>
+        </div>
+
+        <button onclick="useCoupon('WELCOME20')">Use</button>
+    </div>
+
+    <div class="coupon-apply">
+        <input type="text" id="couponInput" placeholder="Enter Coupon Code">
+        <button type="button" onclick="applyCoupon()">Apply</button>
+    </div>
 
 </div>
 
@@ -153,30 +168,36 @@ function buyNow(index){
     window.location.href = "checkout.html";
 }
 
+function useCoupon(code){
+    document.getElementById("couponInput").value = code;
+}
+
 function applyCoupon(){
 
-    let coupon =
-    document.getElementById("couponInput").value;
+    let coupon = document.getElementById("couponInput").value;
 
     if(coupon === "FASHION10"){
 
         let discount = finalTotal * 0.10;
+        finalTotal = total - discount;
 
-        finalTotal = finalTotal - discount;
+        totalPriceElement.innerText = "₹" + finalTotal;
 
-        totalPriceElement.innerText =
-        "₹" + finalTotal;
+        showCartToast("🎉 FASHION10 Applied");
+    }
 
-        showCartToast("🎉 10% Discount Applied");
+    else if(coupon === "WELCOME20" && total >= 2000){
 
+        finalTotal = total - 200;
+
+        totalPriceElement.innerText = "₹" + finalTotal;
+
+        showCartToast("🎉 ₹200 Discount Applied");
     }
 
     else{
-
         showCartToast("❌ Invalid Coupon");
-
     }
-
 }
 </script>
 

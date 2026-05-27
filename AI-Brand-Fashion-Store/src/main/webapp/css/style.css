@@ -1201,6 +1201,7 @@ button:hover{
     text-align:center;
     padding:0 20px 50px;
     margin-top:-40px;
+    margin-top:80px;
     color:white;
 }
 
@@ -1452,4 +1453,71 @@ button:hover{
 
     margin-top:20px;
 
+}
+
+/* COUPON PANEL */
+
+.coupon-panel{
+    width:80%;
+    margin:20px auto;
+    padding:25px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(15px);
+    color:white;
+}
+
+.coupon-panel h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.coupon-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.12);
+    padding:18px;
+    border-radius:18px;
+    margin-bottom:15px;
+}
+
+.coupon-card h3{
+    color:#86efac;
+}
+
+.coupon-card p{
+    color:#ddd6fe;
+}
+
+.coupon-card button{
+    width:100px;
+}
+
+.coupon-apply{
+    width:520px;
+    height:60px;
+    margin:25px auto 0;
+    display:flex;
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.coupon-apply input{
+    flex:1;
+    border:none;
+    outline:none;
+    padding:0 20px;
+    font-size:16px;
+}
+
+.coupon-apply button{
+    width:130px;
+    height:100%;
+    border:none;
+    border-radius:0;
+    background:linear-gradient(135deg,#a855f7,#9333ea);
+    color:white;
+    font-size:18px;
 }
