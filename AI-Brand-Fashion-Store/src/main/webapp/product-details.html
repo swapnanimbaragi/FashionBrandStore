@@ -16,7 +16,7 @@
         <li><a href="cart.html">Cart</a></li>
         <li><a href="profile.html">Profile</a></li>
         <li><a href="orders.html">Orders</a></li>
-        <li><a href="size-guide.html">Size Guide</a></li>
+        
     </ul>
 </nav>
 
@@ -44,6 +44,34 @@
             <button>Add to Cart</button>
             <button class="wishlist-btn">Wishlist</button>
         </div>
+
+        <div class="review-section">
+
+            <h2>Customer Reviews</h2>
+
+            <select id="rating">
+
+                <option>⭐ 1</option>
+                <option>⭐ 2</option>
+                <option>⭐ 3</option>
+                <option>⭐ 4</option>
+                <option>⭐ 5</option>
+
+            </select>
+
+            <textarea
+            id="reviewText"
+            placeholder="Write Review"></textarea>
+
+            <button onclick="addReview()">
+
+                Submit Review
+
+            </button>
+
+            <div id="reviewContainer"></div>
+
+        </div>
     </div>
 
 </section>
@@ -57,6 +85,71 @@ localStorage.getItem("detailImage");
 
 document.getElementById("detailPrice").innerText =
 localStorage.getItem("detailPrice");
+
+function addReview(){
+
+    let rating =
+    document.getElementById("rating").value;
+
+    let review =
+    document.getElementById("reviewText").value;
+
+    let product =
+    localStorage.getItem("detailName");
+
+    let reviewData =
+    JSON.parse(localStorage.getItem(product)) || [];
+
+    reviewData.push({
+
+        rating: rating,
+
+        review: review
+
+    });
+
+    localStorage.setItem(
+        product,
+        JSON.stringify(reviewData)
+    );
+
+    loadReviews();
+
+    document.getElementById("reviewText").value = "";
+
+}
+
+function loadReviews(){
+
+    let product =
+    localStorage.getItem("detailName");
+
+    let reviewContainer =
+    document.getElementById("reviewContainer");
+
+    let reviewData =
+    JSON.parse(localStorage.getItem(product)) || [];
+
+    reviewContainer.innerHTML = "";
+
+    reviewData.forEach(function(item){
+
+        reviewContainer.innerHTML += `
+
+            <div class="review-card">
+
+                <h3>${item.rating}</h3>
+
+                <p>${item.review}</p>
+
+            </div>
+
+        `;
+    });
+
+}
+
+loadReviews();
 </script>
 
 </body>

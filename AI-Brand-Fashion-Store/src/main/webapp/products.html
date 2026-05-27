@@ -1,129 +1,410 @@
-container.innerHTML += `
-    <div class="product-card">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
 
-        <img src="${imgPath}" alt="${brand} Product">
+<body class="home-page">
 
-        <h3 onclick="openProduct(
-            '${brand} ${productNames[category][i - 1]}',
-            '${imgPath}',
-            '₹${prices[category] + i * 500}'
-            )">
+<nav class="navbar">
+    <h1>Fashion-BrandStore</h1>
 
-            ${brand} ${productNames[category][i - 1]}
+    <ul>
+        <li><a href="homepage.html">Home</a></li>
+        <li><a href="homepage.html">Brands</a></li>
+        <li><a href="wishlist.html">Wishlist</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="login.html">Logout</a></li>
+        <li><a href="orders.html">Orders</a></li>
+        
+    </ul>
+</nav>
 
-        </h3>
+<section class="search-section">
+    <h2 id="brandTitle"></h2>
+</section>
 
-        <p class="price">
-            ₹${prices[category] + i * 500}
-        </p>
+<div class="sort-box">
 
-        <p>
-            ⭐ 4.${i % 5}
-        </p>
+    <select id="sortSelect" onchange="sortProducts()">
 
-        <p class="offer">
-            ${10 + i}% OFF
-        </p>
+        <option value="">Sort Products</option>
 
+        <option value="low">Price Low to High</option>
 
+        <option value="high">Price High to Low</option>
 
-        <!-- CATEGORY WISE OPTIONS -->
+    </select>
 
-        <select class="size-select">
+</div>
 
-        ${category === "shoes" ? `
+<section class="categories" id="productContainer"></section>
 
-            <option>Select Size</option>
+<script>
+const params = new URLSearchParams(window.location.search);
+const category = params.get("category");
+const brand = params.get("brand");
 
-            <option>6 UK</option>
-            <option>7 UK</option>
-            <option>8 UK</option>
-            <option>9 UK</option>
-            <option>10 UK</option>
+const brandTitle = document.getElementById("brandTitle");
+const container = document.getElementById("productContainer");
 
-        ` : category === "watches" ? `
+brandTitle.innerText = brand + " Products";
 
-            <option>Select Strap</option>
+const productNames = {
+    watches: ["Classic Watch","Analog Watch","Luxury Watch","Metal Watch","Leather Watch","Smart Watch","Chronograph Watch","Premium Watch","Gold Watch","Silver Watch"],
+    shoes: ["Running Shoes","Casual Shoes","Sports Shoes","Sneakers","Walking Shoes","Training Shoes","Canvas Shoes","Slip On Shoes","High Top Shoes","Comfort Shoes"],
+    makeup: ["Lipstick","Foundation","Kajal","Mascara","Compact Powder","Primer","Eyeliner","Blush","Concealer","Face Wash"],
+    bags: ["Hand Bag","Backpack","Travel Bag","Sling Bag","Laptop Bag","Tote Bag","Shoulder Bag","Duffel Bag","Office Bag","Wallet"],
+    dresses: ["Floral Dress","Maxi Dress","Kurta Dress","Party Dress","Cotton Dress","A Line Dress","Printed Dress","Midi Dress","Casual Dress","Ethnic Dress"]
+};
 
-            <option>Leather</option>
-            <option>Metal</option>
-            <option>Silicone</option>
+const prices = {
+    watches: 2500,
+    shoes: 1800,
+    makeup: 399,
+    bags: 1200,
+    dresses: 999
+};
 
-        ` : category === "makeup" ? `
+const imageLinks = {
 
-            <option>Select Shade</option>
+watches: {
 
-            <option>Light</option>
-            <option>Medium</option>
-            <option>Dark</option>
-            <option>Nude</option>
+"Fastrack": [
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/k/u/f/-original-imagpfen9kfhutmm.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/e/r/f/-original-imagz6tzewxwqzha.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/l/0/r/-original-imagz6tzxg3rj8h8.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/v/f/u/-original-imagrk9ryrmh7zfh.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/f/f/8/-original-imagz6tzzh4nqjfg.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/p/m/n/-original-imagz6tz5f3phvdf.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/u/h/3/-original-imagz6tzrjzgf7gv.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/w/m/n/-original-imagz6tz6wgahm3m.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/j/o/f/-original-imagz6tz4vgh6hgm.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/c/u/t/-original-imagz6tzgf5m7fdj.jpeg"
+],
 
-        ` : category === "bags" ? `
+"Titan": [
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/r/r/o/-original-imagqhvgybexgkmh.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/n/p/v/-original-imagrk9ry5fkgj7v.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/q/d/z/-original-imagqhvggg2ptnzm.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/z/v/o/-original-imagrk9rjz8mghfu.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/k/x/i/-original-imagrk9rxgch5fyy.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/g/t/w/-original-imagqhvgnvzgvcbh.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/f/y/0/-original-imagrk9rrfqvhvgg.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/x/u/w/-original-imagrk9rdyh8fg7h.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/u/r/r/-original-imagrk9r9ggfmbtf.jpeg",
+"https://rukminim2.flixcart.com/image/832/832/xif0q/watch/w/p/l/-original-imagqhvggg4nccvh.jpeg"
+],
 
-            <option>Select Capacity</option>
+"Casio": [
+"https://m.media-amazon.com/images/I/61JD6qT9fIL._UY741_.jpg",
+"https://m.media-amazon.com/images/I/71M7X2wqP-L._UY741_.jpg",
+"https://m.media-amazon.com/images/I/61P6M8x8W4L._UY741_.jpg",
+"https://m.media-amazon.com/images/I/71P9wJX6mKL._UY741_.jpg",
+"https://m.media-amazon.com/images/I/71v2M5g7bXL._UY741_.jpg",
+"https://m.media-amazon.com/images/I/61zR3G4K0DL._UY741_.jpg",
+"https://m.media-amazon.com/images/I/71sA6sM9fAL._UY741_.jpg",
+"https://m.media-amazon.com/images/I/61jQqvrxJxL._UY741_.jpg",
+"https://m.media-amazon.com/images/I/61l4LxL6nIL._UY741_.jpg",
+"https://m.media-amazon.com/images/I/71i9vH4t7IL._UY741_.jpg"
+],
 
-            <option>10L</option>
-            <option>20L</option>
-            <option>30L</option>
+"Fossil": [
+"https://fossil.scene7.com/is/image/FossilPartners/FS5987_main?$sfcc_fos_hi-res$",
+"https://fossil.scene7.com/is/image/FossilPartners/FS5962_main?$sfcc_fos_hi-res$",
+"https://fossil.scene7.com/is/image/FossilPartners/FS6008_main?$sfcc_fos_hi-res$",
+"https://fossil.scene7.com/is/image/FossilPartners/FS6013_main?$sfcc_fos_hi-res$",
+"https://fossil.scene7.com/is/image/FossilPartners/FS6036_main?$sfcc_fos_hi-res$",
+"https://fossil.scene7.com/is/image/FossilPartners/FS6062_main?$sfcc_fos_hi-res$",
+"https://fossil.scene7.com/is/image/FossilPartners/FS6094_main?$sfcc_fos_hi-res$",
+"https://fossil.scene7.com/is/image/FossilPartners/FS6107_main?$sfcc_fos_hi-res$",
+"https://fossil.scene7.com/is/image/FossilPartners/FS6111_main?$sfcc_fos_hi-res$",
+"https://fossil.scene7.com/is/image/FossilPartners/FS6120_main?$sfcc_fos_hi-res$"
+],
 
-        ` : `
+"Rolex": [
+"https://content.rolex.com/v7/dam/2022/upright-bba-with-shadow/m126610ln-0001.png",
+"https://content.rolex.com/v7/dam/2022/upright-bba-with-shadow/m126334-0022.png",
+"https://content.rolex.com/v7/dam/2022/upright-bba-with-shadow/m116500ln-0001.png",
+"https://content.rolex.com/v7/dam/2022/upright-bba-with-shadow/m126710blnr-0002.png",
+"https://content.rolex.com/v7/dam/2022/upright-bba-with-shadow/m124300-0001.png",
+"https://content.rolex.com/v7/dam/2022/upright-bba-with-shadow/m226659-0002.png",
+"https://content.rolex.com/v7/dam/2022/upright-bba-with-shadow/m126600-0002.png",
+"https://content.rolex.com/v7/dam/2022/upright-bba-with-shadow/m124273-0001.png",
+"https://content.rolex.com/v7/dam/2022/upright-bba-with-shadow/m126900-0001.png",
+"https://content.rolex.com/v7/dam/2022/upright-bba-with-shadow/m228238-0006.png"
+],
 
-            <option>Select Size</option>
+"Rado": [
+"https://www.rado.com/media/catalog/product/r/a/rado-centrix-r30927153.png",
+"https://www.rado.com/media/catalog/product/r/a/rado-captaincook-r32129152.png",
+"https://www.rado.com/media/catalog/product/r/a/rado-hyperchrome-r32502153.png",
+"https://www.rado.com/media/catalog/product/r/a/rado-true-r27054162.png",
+"https://www.rado.com/media/catalog/product/r/a/rado-diastar-r12160303.png",
+"https://www.rado.com/media/catalog/product/r/a/rado-florence-r48912713.png",
+"https://www.rado.com/media/catalog/product/r/a/rado-goldenhorse-r33930313.png",
+"https://www.rado.com/media/catalog/product/r/a/rado-hyperchrome-r32121102.png",
+"https://www.rado.com/media/catalog/product/r/a/rado-tradition-r12391103.png",
+"https://www.rado.com/media/catalog/product/r/a/rado-centrix-r30029902.png"
+],
 
-            <option>XS</option>
-            <option>S</option>
-            <option>M</option>
-            <option>L</option>
-            <option>XL</option>
+"Armani Exchange": [
+"https://armaniexchange.scene7.com/is/image/aeo/AX2104_main",
+"https://armaniexchange.scene7.com/is/image/aeo/AX2145_main",
+"https://armaniexchange.scene7.com/is/image/aeo/AX2164_main",
+"https://armaniexchange.scene7.com/is/image/aeo/AX2440_main",
+"https://armaniexchange.scene7.com/is/image/aeo/AX1722_main",
+"https://armaniexchange.scene7.com/is/image/aeo/AX1326_main",
+"https://armaniexchange.scene7.com/is/image/aeo/AX2601_main",
+"https://armaniexchange.scene7.com/is/image/aeo/AX2715_main",
+"https://armaniexchange.scene7.com/is/image/aeo/AX2804_main",
+"https://armaniexchange.scene7.com/is/image/aeo/AX2901_main"
+]
 
-        `}
+},
 
-        </select>
+shoes: {
 
+"Nike": [
+"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/air-force-1.png",
+"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/air-max-90.png",
+"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/dunk-low.png",
+"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/revolution-7.png",
+"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/pegasus-41.png",
+"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/jordan-stadium-90.png",
+"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/court-vision.png",
+"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/blazer-mid.png",
+"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/vaporfly.png",
+"https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/react-run.png"
+],
 
+"Adidas": [
+"https://assets.adidas.com/images/w_600,f_auto,q_auto/ultraboost.jpg",
+"https://assets.adidas.com/images/w_600,f_auto,q_auto/forum-low.jpg",
+"https://assets.adidas.com/images/w_600,f_auto,q_auto/superstar.jpg",
+"https://assets.adidas.com/images/w_600,f_auto,q_auto/gazelle.jpg",
+"https://assets.adidas.com/images/w_600,f_auto,q_auto/nmd-r1.jpg",
+"https://assets.adidas.com/images/w_600,f_auto,q_auto/ozweego.jpg",
+"https://assets.adidas.com/images/w_600,f_auto,q_auto/stan-smith.jpg",
+"https://assets.adidas.com/images/w_600,f_auto,q_auto/campus-00s.jpg",
+"https://assets.adidas.com/images/w_600,f_auto,q_auto/samba.jpg",
+"https://assets.adidas.com/images/w_600,f_auto,q_auto/adizero.jpg"
+]
+}
+};
+let productList = [];
 
-        <!-- PRODUCT DETAILS -->
+for(let i = 1; i <= 10; i++){
 
-        <div class="product-info">
+    productList.push({
+        name: productNames[category][i - 1],
+        image: imageLinks[category][brand][i - 1],
+        price: prices[category] + i * 500
+    });
 
-            <p>✅ Cash On Delivery Available</p>
+}
 
-            <p>✅ Online Payment Available</p>
+displayProducts(productList);
 
-            <p>✅ 7 Days Return Policy</p>
+function displayProducts(products){
 
-            <p>🚚 Free Delivery</p>
+    container.innerHTML = "";
 
-            <p>⭐ Premium Quality Product</p>
+    products.forEach(function(product, index){
 
-        </div>
+        let imgPath = product.image;
 
+        container.innerHTML += `
 
+            <div class="product-card">
 
-        <div class="product-buttons">
+                <img src="${imgPath}" alt="${brand} Product">
 
-            <button onclick="addToCart(
-                '${brand} ${productNames[category][i - 1]}',
-                '${imgPath}',
-                '₹${prices[category] + i * 500}'
-            )">
+                <h3 onclick="openProduct(
+                    '${brand} ${product.name}',
+                    '${imgPath}',
+                    '₹${product.price}'
+                )">
+                    ${brand} ${product.name}
+                </h3>
 
-                Add to Cart
+                <p class="price">
+                    ₹${product.price}
+                </p>
 
-            </button>
+                <p>
+                    ⭐ 4.${index % 5}
+                </p>
 
-            <button class="wishlist-btn"
-            onclick="addToWishlist(
-                '${brand} ${productNames[category][i - 1]}',
-                '${imgPath}',
-                '₹${prices[category] + i * 500}'
-            )">
+                <p class="stock-status 
+                    ${index % 5 === 0 ? 'out-stock' : index % 3 === 0 ? 'few-stock' : 'in-stock'}">
 
-                Wishlist
+                    ${index % 5 === 0 ? 'Out Of Stock' : index % 3 === 0 ? 'Few Left' : 'In Stock'}
 
-            </button>
+                </p>
 
-        </div>
+                <select class="size-select">
 
-    </div>
-`;
+                ${category === "shoes" ? `
+
+                    <option>Select Size</option>
+                    <option>6 UK</option>
+                    <option>7 UK</option>
+                    <option>8 UK</option>
+                    <option>9 UK</option>
+                    <option>10 UK</option>
+
+                ` : category === "watches" ? `
+
+                    <option>Select Strap</option>
+                    <option>Leather</option>
+                    <option>Metal</option>
+                    <option>Silicone</option>
+
+                ` : category === "makeup" ? `
+
+                    <option>Select Shade</option>
+                    <option>Light</option>
+                    <option>Medium</option>
+                    <option>Dark</option>
+                    <option>Nude</option>
+
+                ` : `
+
+                    <option>Select Size</option>
+                    <option>S</option>
+                    <option>M</option>
+                    <option>L</option>
+
+                `}
+
+                </select>
+
+                <div class="product-info">
+
+                    <p>✅ Cash On Delivery Available</p>
+                    <p>✅ Online Payment Available</p>
+                    <p>✅ 7 Days Return Policy</p>
+                    <p>🚚 Free Delivery</p>
+                    <p>⭐ Premium Quality Product</p>
+                    <p>🚚 Delivery in 4-6 Days</p>
+
+                </div>
+
+                <div class="product-buttons">
+
+                    <button onclick="addToCart(
+                        '${brand} ${product.name}',
+                        '${imgPath}',
+                        '₹${product.price}'
+                    )">
+                        Add to Cart
+                    </button>
+
+                    <button class="wishlist-btn" onclick="addToWishlist(
+                        '${brand} ${product.name}',
+                        '${imgPath}',
+                        '₹${product.price}'
+                    )">
+                        Wishlist
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+    });
+
+}
+
+function sortProducts(){
+
+    let value = document.getElementById("sortSelect").value;
+
+    if(value === "low"){
+        productList.sort(function(a,b){
+            return a.price - b.price;
+        });
+    }
+
+    else if(value === "high"){
+        productList.sort(function(a,b){
+            return b.price - a.price;
+        });
+    }
+
+    displayProducts(productList);
+}
+
+function openProduct(name, image, price){
+
+    localStorage.setItem("detailName", name);
+    localStorage.setItem("detailImage", image);
+    localStorage.setItem("detailPrice", price);
+
+    window.location.href = "product-details.html";
+}
+
+function addToCart(name, image, price){
+
+    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    let product = {
+        name: name,
+        image: image,
+        price: price
+    };
+
+    cartItems.push(product);
+
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+    showCartToast("🛒 Product added to cart");
+}
+
+function addToWishlist(name, image, price){
+
+    localStorage.setItem("wishName", name);
+    localStorage.setItem("wishImage", image);
+    localStorage.setItem("wishPrice", price);
+
+    showToast("❤️ Product added to wishlist");
+}
+
+function showToast(message){
+
+    let toast = document.createElement("div");
+
+    toast.className = "toast";
+
+    toast.innerText = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(function(){
+        toast.remove();
+    },2500);
+}
+
+function showCartToast(message){
+
+    let toast = document.createElement("div");
+
+    toast.className = "cart-toast";
+
+    toast.innerText = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(function(){
+        toast.remove();
+    },2500);
+}
+
+</script>
+
+</body>
+</html>

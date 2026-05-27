@@ -18,7 +18,7 @@
         <li><a href="profile.html">Profile</a></li>
         <li><a href="orders.html">Orders</a></li>
         <li><a href="login.html">Logout</a></li>
-        <li><a href="size-guide.html">Size Guide</a></li>
+        
     </ul>
 </nav>
 
@@ -28,6 +28,20 @@
 </section>
 
 <section class="categories" id="cartContainer"></section>
+
+<div class="coupon-box">
+
+    <input type="text"
+    id="couponInput"
+    placeholder="Enter Coupon Code">
+
+    <button onclick="applyCoupon()">
+
+        Apply Coupon
+
+    </button>
+
+</div>
 
 <section class="cart-total-section">
     <h2>Total Amount</h2>
@@ -45,6 +59,7 @@ let cartContainer = document.getElementById("cartContainer");
 let totalPriceElement = document.getElementById("totalPrice");
 
 let total = 0;
+let finalTotal = 0;
 
 if(cartItems.length > 0){
 
@@ -54,6 +69,12 @@ if(cartItems.length > 0){
         let quantity = item.qty || 1;
 
         total = total + (priceNumber * quantity);
+
+        let today = new Date();
+        let deliveryDays = 3 + quantity + index;
+        let deliveryDate = new Date(today);
+        deliveryDate.setDate(today.getDate() + deliveryDays);
+        let formattedDate = deliveryDate.toDateString();
 
         cartContainer.innerHTML += `
             <div class="product-card">
@@ -72,6 +93,9 @@ if(cartItems.length > 0){
                 <p>⭐ 4.8</p>
 
                 <p class="offer">Special Offer Available</p>
+                <p class="delivery-date">
+                    🚚 Expected Delivery: ${formattedDate}
+                </p>
 
                 <div class="product-buttons">
                     <button onclick="buyNow(${index})">Buy Now</button>
@@ -84,7 +108,9 @@ if(cartItems.length > 0){
         `;
     });
 
-    totalPriceElement.innerText = "₹" + total;
+    finalTotal = total;
+    totalPriceElement.innerText =
+    "₹" + finalTotal;
 }
 else{
     cartContainer.innerHTML = `
@@ -125,6 +151,32 @@ function buyNow(index){
     localStorage.setItem("cartPrice", selectedItem.price);
 
     window.location.href = "checkout.html";
+}
+
+function applyCoupon(){
+
+    let coupon =
+    document.getElementById("couponInput").value;
+
+    if(coupon === "FASHION10"){
+
+        let discount = finalTotal * 0.10;
+
+        finalTotal = finalTotal - discount;
+
+        totalPriceElement.innerText =
+        "₹" + finalTotal;
+
+        showCartToast("🎉 10% Discount Applied");
+
+    }
+
+    else{
+
+        showCartToast("❌ Invalid Coupon");
+
+    }
+
 }
 </script>
 
