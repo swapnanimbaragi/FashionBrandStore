@@ -17,6 +17,11 @@
         <li><a href="cart.html">Cart</a></li>
         <li><a href="orders.html">Orders</a></li>
         <li><a href="login.html">Logout</a></li>
+        <li>
+            <button onclick="toggleTheme()" class="theme-btn">
+                🌙
+            </button>
+        </li>
     </ul>
 </nav>
 
@@ -84,6 +89,32 @@ let wishlistItems = JSON.parse(localStorage.getItem("wishlistItems")) || [];
 document.getElementById("cartCount").innerText = cartItems.length;
 document.getElementById("wishlistCount").innerText = wishlistItems.length;
 </script>
+<script>
 
+function toggleTheme(){
+
+    document.body.classList.toggle("light-mode");
+
+    if(document.body.classList.contains("light-mode")){
+
+        localStorage.setItem("theme","light");
+
+    }
+
+    else{
+
+        localStorage.setItem("theme","dark");
+
+    }
+
+}
+
+if(localStorage.getItem("theme") === "light"){
+
+    document.body.classList.add("light-mode");
+
+}
+
+</script>
 </body>
 </html>
