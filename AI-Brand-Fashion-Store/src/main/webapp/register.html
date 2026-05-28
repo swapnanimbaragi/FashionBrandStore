@@ -29,7 +29,7 @@
 
                 <input type="email"
                 id="email"
-                placeholder="Enter Email"
+                placeholder="Enter Gmail"
                 required>
 
                 <input type="text"
@@ -52,20 +52,10 @@
                 placeholder="Confirm Password"
                 required>
 
-                <button type="submit">
-
-                    Register
-
-                </button>
+                <button type="submit">Register</button>
 
                 <div class="links">
-
-                    <a href="login.html">
-
-                        Already have account?
-
-                    </a>
-
+                    <a href="login.html">Already have account?</a>
                 </div>
 
             </form>
@@ -80,138 +70,101 @@ async function registerUser(event){
 
     event.preventDefault();
 
-    let name =
-    document.getElementById("name").value;
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let address = document.getElementById("address").value.trim();
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
 
-    let email =
-    document.getElementById("email").value;
+    let namePattern = /^[A-Za-z ]+$/;
+    let emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    let phonePattern = /^[0-9]{10}$/;
 
-    let phone =
-    document.getElementById("phone").value;
+    if(!namePattern.test(name)){
+        alert("Name should contain only letters");
+        return;
+    }
 
-    let address =
-    document.getElementById("address").value;
+    if(name.length < 3){
+        alert("Name must contain minimum 3 letters");
+        return;
+    }
 
-    let password =
-    document.getElementById("password").value;
+    if(!emailPattern.test(email)){
+        alert("Enter valid Gmail");
+        return;
+    }
 
-    let confirmPassword =
-    document.getElementById("confirmPassword").value;
+    if(!phonePattern.test(phone)){
+        alert("Enter valid 10 digit phone number");
+        return;
+    }
+
+    if(address.length < 5){
+        alert("Enter proper address");
+        return;
+    }
+
+    if(password.length < 6){
+        alert("Password must contain minimum 6 characters");
+        return;
+    }
+
+    if(!/[A-Z]/.test(password)){
+        alert("Password must contain one capital letter");
+        return;
+    }
+
+    if(!/[0-9]/.test(password)){
+        alert("Password must contain one number");
+        return;
+    }
 
     if(password !== confirmPassword){
-
         alert("Passwords do not match");
-
         return;
-
     }
 
     let formData = new URLSearchParams();
 
-    if(name.length < 3)
-    {
-
-        alert("Name must contain minimum 3 letters");
-
-        return;
-
-    }
-
-    if(!email.includes("@gmail.com")){
-
-        alert("Enter valid Gmail");
-
-        return;
-
-    }
-
-    if(phone.length != 10){
-
-        alert("Phone number must contain 10 digits");
-
-        return;
-
-    }
-
-    if(address.length < 5){
-
-        alert("Enter proper address");
-
-        return;
-
-    }
-
-    if(password.length < 4){
-
-        alert("Password must contain minimum 4 characters");
-
-        return;
-
-    }
-
-    if(password !== confirmPassword){
-
-        alert("Passwords do not match");
-
-        return;
-
-    }
-
     formData.append("name", name);
-
     formData.append("email", email);
-
     formData.append("password", password);
-
     formData.append("phone", phone);
-
     formData.append("address", address);
 
     try{
 
         let response = await fetch(
         "http://localhost:8080/AiFashionStore/register",
-
         {
-
             method:"POST",
-
             headers:{
-                "Content-Type":
-                "application/x-www-form-urlencoded"
+                "Content-Type":"application/x-www-form-urlencoded"
             },
-
             body:formData
-
         });
 
         let result = await response.text();
 
         if(result.includes("Successful")){
-
             alert("Registration Successful");
-
-            window.location.href =
-            "login.html";
-
+            localStorage.setItem("profileName", name);
+localStorage.setItem("profilePhone", phone);
+localStorage.setItem("profileAddress", address);
+            localStorage.setItem("loggedUser", email);
+            window.location.href = "login.html";
         }
-
         else{
-
             alert("Registration Failed");
-
         }
 
     }
-
     catch(error){
-
         alert("Server Error");
-
         console.log(error);
-
     }
-
 }
 
 </script>

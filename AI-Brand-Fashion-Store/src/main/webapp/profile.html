@@ -9,14 +9,14 @@
 
 <nav class="navbar">
     <h1>Fashion-BrandStore</h1>
+
     <ul>
         <li><a href="homepage.html">Home</a></li>
         <li><a href="homepage.html">Brands</a></li>
         <li><a href="wishlist.html">Wishlist</a></li>
         <li><a href="cart.html">Cart</a></li>
-        <li><a href="login.html">Logout</a></li>
         <li><a href="orders.html">Orders</a></li>
-        
+        <li><a href="login.html">Logout</a></li>
     </ul>
 </nav>
 
@@ -27,9 +27,9 @@
 
         <div class="profile-avatar">S</div>
 
-        <h2>Swapna Nimbaragi</h2>
-        <p>swapna@example.com</p>
-        <p>+91 9876543210</p>
+        <h2 id="profileName"></h2>
+        <p id="profileEmail"></p>
+        <p id="profilePhone"></p>
 
         <button>Edit Profile</button>
     </div>
@@ -43,18 +43,17 @@
 
         <div class="small-box">
             <h3>Wishlist</h3>
-            <h2>8</h2>
+            <h2 id="wishlistCount">0</h2>
         </div>
 
         <div class="small-box">
             <h3>Cart Items</h3>
-            <h2>3</h2>
+            <h2 id="cartCount">0</h2>
         </div>
 
         <div class="large-box">
             <h2>Saved Address</h2>
-            <p>Bagalkote, Karnataka</p>
-            <p>Pincode: 587101</p>
+            <p id="profileAddress"></p>
         </div>
 
         <div class="large-box">
@@ -67,6 +66,24 @@
     </div>
 
 </section>
+
+<script>
+let savedName = localStorage.getItem("profileName") || "Fashion User";
+let savedEmail = localStorage.getItem("loggedUser") || "No Email";
+let savedPhone = localStorage.getItem("profilePhone") || "+91 0000000000";
+let savedAddress = localStorage.getItem("profileAddress") || "No Address Saved";
+
+document.getElementById("profileName").innerText = savedName;
+document.getElementById("profileEmail").innerText = savedEmail;
+document.getElementById("profilePhone").innerText = savedPhone;
+document.getElementById("profileAddress").innerText = savedAddress;
+
+let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+let wishlistItems = JSON.parse(localStorage.getItem("wishlistItems")) || [];
+
+document.getElementById("cartCount").innerText = cartItems.length;
+document.getElementById("wishlistCount").innerText = wishlistItems.length;
+</script>
 
 </body>
 </html>
