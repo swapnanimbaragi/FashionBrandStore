@@ -1521,3 +1521,91 @@ button:hover{
     color:white;
     font-size:18px;
 }
+
+/* profile - section */
+.profile-section{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:100vh;
+
+}
+
+.profile-card{
+
+    width:400px;
+
+    padding:40px;
+
+    border-radius:25px;
+
+    background:rgba(255,255,255,0.12);
+
+    backdrop-filter:blur(15px);
+
+    text-align:center;
+
+    color:white;
+
+}
+
+/* THEME BUTTON */
+
+.theme-btn{
+
+    width:45px;
+
+    height:45px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+}
+
+
+
+/* LIGHT MODE */
+
+.light-mode{
+
+    background:#f3f4f6 !important;
+
+    color:black !important;
+
+}
+
+.light-mode .navbar{
+
+    background:white !important;
+
+}
+
+.light-mode .product-card,
+.light-mode .small-box,
+.light-mode .large-box,
+.light-mode .profile-left-card,
+.light-mode .coupon-panel{
+
+    background:white !important;
+
+    color:black !important;
+
+}
+
+.light-mode p,
+.light-mode h1,
+.light-mode h2,
+.light-mode h3{
+
+    color:black !important;
+
+}
