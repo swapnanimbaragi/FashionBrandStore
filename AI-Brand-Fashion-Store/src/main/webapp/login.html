@@ -17,11 +17,11 @@
                 BrandStore</h1>
             <p>Multi Brand Fashion Platform</p>
 
-            <form action="homepage.html">
+            <form onsubmit="loginUser(event)">
 
-                <input type="email" placeholder="Enter Email">
+                <input type="email" id="email" placeholder="Enter Email" required>
 
-                <input type="password" placeholder="Enter Password">
+                <input type="password" id="password" placeholder="Enter Password" required>
 
                 <button type="submit">Login</button>
 
@@ -35,6 +35,80 @@
         </div>
 
     </div>
+<script>
 
+async function loginUser(event){
+
+    event.preventDefault();
+
+    let email =
+    document.getElementById("email").value;
+
+    let password =
+    document.getElementById("password").value;
+
+    if(!email.includes("@gmail.com"))
+    {
+
+    alert("Enter valid Gmail");
+
+    return;
+
+    }
+
+    if(password.length < 4){
+
+        alert("Password must be minimum 4 characters");
+
+        return;
+
+    }
+
+    let formData = new URLSearchParams();
+
+    formData.append("email", email);
+
+    formData.append("password", password);
+
+    try{
+
+        let response = await fetch("http://192.168.1.11:8080/AiFashionStore/login", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/x-www-form-urlencoded"
+            },
+            body:formData
+        });
+
+        let result = await response.text();
+
+        if(result.includes("Successful")){
+
+            alert("Login Successful");
+
+            window.location.href =
+            "homepage.html";
+
+        }
+
+        else{
+
+            alert("Invalid Login");
+
+        }
+
+    }
+
+    catch(error){
+
+        alert("Server Error");
+
+        console.log(error);
+
+    }
+
+}
+
+</script>
 </body>
 </html>
