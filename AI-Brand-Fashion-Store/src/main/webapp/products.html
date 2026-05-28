@@ -44,7 +44,14 @@
     </select>
 
 </div>
+<div class="search-bar">
 
+    <input type="text"
+    id="searchInput"
+    placeholder="Search Products..."
+    onkeyup="searchProducts()">
+
+</div>
 <section class="categories" id="productContainer"></section>
 
 <script>
@@ -322,6 +329,26 @@ function displayProducts(products){
         `;
 
     });
+
+}
+function searchProducts(){
+
+    let searchValue =
+    document.getElementById("searchInput")
+    .value.toLowerCase();
+
+    let filteredProducts =
+    productList.filter(function(product){
+
+        return (
+            (brand + " " + product.name)
+            .toLowerCase()
+            .includes(searchValue)
+        );
+
+    });
+
+    displayProducts(filteredProducts);
 
 }
 
