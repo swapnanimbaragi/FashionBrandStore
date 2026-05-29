@@ -1372,9 +1372,9 @@ button:hover{
 
 .sort-box select{
 
-    width:260px;
+    width:280px;
 
-    padding:18px;
+    padding:18px 50px 18px 20px;
 
     border:none;
 
@@ -1390,12 +1390,18 @@ button:hover{
 
     cursor:pointer;
 
+    appearance:auto;
+
 }
 
 .sort-box option{
 
     color:black;
 
+}
+
+.sort-box{
+    overflow:visible;
 }
 
 /* COUPON BOX */
