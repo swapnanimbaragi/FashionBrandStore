@@ -1609,3 +1609,21 @@ button:hover{
     color:black !important;
 
 }
+/* SEARCH BAR */
+.search-bar{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:25px 0 40px;
+}
+
+.search-bar input{
+    width:420px;
+    max-width:90%;
+    padding:16px 22px;
+    border:none;
+    border-radius:20px;
+    outline:none;
+    font-size:17px;
+}
