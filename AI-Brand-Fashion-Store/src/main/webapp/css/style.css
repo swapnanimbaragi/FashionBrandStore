@@ -1769,9 +1769,11 @@ button:hover{
 
     display:grid;
 
-    grid-template-columns:repeat(4,280px);
+    grid-template-columns:repeat(4,260px);
 
-    gap:10px;
+    column-gap:10px;
+
+    row-gap:40px;
 
     justify-content:center;
 
@@ -1804,7 +1806,7 @@ button:hover{
 
     .categories{
 
-        grid-template-columns:repeat(4,260px);
+        grid-template-columns:repeat(4,320px);
         justify-content:center;
         padding:30px;
 
